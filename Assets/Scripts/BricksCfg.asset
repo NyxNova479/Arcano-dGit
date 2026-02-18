@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 535f6b3cf9a27db4c8da7126f395e0ba, type: 3}
+  m_Name: BricksCfg
+  m_EditorClassIdentifier: 
+  bricksTypes:
+  - name: Normal
+    points: 20
+    hitToBreak: 1
+    color: {r: 0, g: 0, b: 0, a: 0}
+    prefab: {fileID: 0}
+    isTranslucid: 0
+    hasBonus: 0
+  - name: Tank
+    points: 40
+    hitToBreak: 3
+    color: {r: 0, g: 0, b: 0, a: 0}
+    prefab: {fileID: 0}
+    isTranslucid: 0
+    hasBonus: 0
+  - name: Bonus
+    points: 15
+    hitToBreak: 1
+    color: {r: 0, g: 0, b: 0, a: 0}
+    prefab: {fileID: 0}
+    isTranslucid: 0
+    hasBonus: 1

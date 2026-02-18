@@ -2,15 +2,41 @@ using UnityEngine;
 
 public class BricksScript : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    public BricksData.BrickType BrickType;
+    public int ScoreData;
+
+    public Sprite sprite01;
+    public Sprite sprite02;
+    private SpriteRenderer spriteRenderer;
+
+    private bool isSprite01;
+
+    private void Awake()
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sprite = sprite01;
+            isSprite01 = true;
+        }
+        else
+        {
+            Debug.LogError("[EnnemyScript] SpriteRenderer is not assigned");
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeSprite()
     {
-        
+        if (sprite01 == null && sprite02 == null) return;
+        isSprite01 = !isSprite01;
+
+
+        // spriteRenderer.sprite = (condition) ? (si vrai) : (si faux);
+        spriteRenderer.sprite = isSprite01 ? sprite01 : sprite02;
+
     }
+
+
+
 }
