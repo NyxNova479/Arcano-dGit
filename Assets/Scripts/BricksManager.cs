@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static BricksData;
 
-public class EnemyManager : MonoBehaviour
+public class BricksManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject player;
@@ -66,7 +66,7 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnBricks()
     {
-        var bricksTypes = BrickPool.GetBrickType();
+        var bricksTypes = brickPool.GetBrickType();
 
 
 
@@ -76,7 +76,7 @@ public class EnemyManager : MonoBehaviour
 
             for (int col = 0; col < columns; col++)
             {
-                GameObject brick = BrickPool.GetBrick(bricksType.prefab);
+                GameObject brick = brickPool.GetBrick(bricksType.prefab);
 
                 if (brick != null)
                 {
@@ -256,7 +256,7 @@ public class EnemyManager : MonoBehaviour
         //audioSource.PlayOneShot(explosionSound, 0.7f);
         GameManager.Instance.AddScore(enemy.GetComponent<BricksScript>().ScoreData);
 
-        BrickPool.ReturnToPool(enemy, prefab);
+        brickPool.ReturnToPool(enemy, prefab);
 
         remainingBricks--;
 

@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject[] _livesImage;
 
-    public EnemyManager enemyManager;
+    public BricksManager bricksManager;
     [SerializeField]
     private TextMeshProUGUI gameOverUI;
 
@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
     public void CompletedLevel()
     {
         // TODO : Implémenter le CompletedLevel
-        enemyManager.SpawnBricks();
+        bricksManager.SpawnBricks();
         
         _lives = 2;
     }
