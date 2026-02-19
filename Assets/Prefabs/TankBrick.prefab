@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7712744911091677650}
   - component: {fileID: 7457575863150378016}
+  - component: {fileID: 1620135383461512931}
   m_Layer: 0
   m_Name: TankBrick
   m_TagString: Untagged
@@ -87,3 +88,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1620135383461512931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4014273264997370609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 771386f88cfab344684b80dd9c6a11f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BrickType:
+    name: 
+    points: 0
+    hitToBreak: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
+    prefab: {fileID: 0}
+    isTranslucid: 0
+    hasBonus: 0
+  ScoreData: 0
+  sprite01: {fileID: 0}
+  sprite02: {fileID: 0}

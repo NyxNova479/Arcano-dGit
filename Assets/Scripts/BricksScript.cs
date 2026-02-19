@@ -6,8 +6,7 @@ public class BricksScript : MonoBehaviour
     public BricksData.BrickType BrickType;
     public int ScoreData;
 
-    public Sprite sprite01;
-    public Sprite sprite02;
+
     private SpriteRenderer spriteRenderer;
 
     private bool isSprite01;
@@ -15,27 +14,22 @@ public class BricksScript : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer != null)
-        {
-            spriteRenderer.sprite = sprite01;
-            isSprite01 = true;
-        }
-        else
-        {
-            Debug.LogError("[EnnemyScript] SpriteRenderer is not assigned");
-        }
+
+        GameObject outline = new GameObject("Outline");
+        outline.transform.SetParent(transform);
+        outline.transform.localPosition = Vector3.zero;
+        outline.transform.localScale = Vector3.one * 1.05f;
+
+        SpriteRenderer osr = outline.AddComponent<SpriteRenderer>();
+        osr.sprite = spriteRenderer.sprite;
+        osr.color = Color.black;
+        osr.sortingLayerID = spriteRenderer.sortingLayerID;
+        osr.sortingOrder = spriteRenderer.sortingOrder - 1;
     }
 
-    public void ChangeSprite()
-    {
-        if (sprite01 == null && sprite02 == null) return;
-        isSprite01 = !isSprite01;
 
 
-        // spriteRenderer.sprite = (condition) ? (si vrai) : (si faux);
-        spriteRenderer.sprite = isSprite01 ? sprite01 : sprite02;
 
-    }
 
 
 
