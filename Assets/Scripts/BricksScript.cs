@@ -9,7 +9,7 @@ public class BricksScript : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
-    private bool isSprite01;
+
 
     private void Awake()
     {
@@ -18,7 +18,7 @@ public class BricksScript : MonoBehaviour
         GameObject outline = new GameObject("Outline");
         outline.transform.SetParent(transform);
         outline.transform.localPosition = Vector3.zero;
-        outline.transform.localScale = Vector3.one * 1.05f;
+        outline.transform.localScale = Vector3.one * 1.1f;
 
         SpriteRenderer osr = outline.AddComponent<SpriteRenderer>();
         osr.sprite = spriteRenderer.sprite;

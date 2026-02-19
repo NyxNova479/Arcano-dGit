@@ -18,7 +18,10 @@ public class BricksManager : MonoBehaviour
 
     public BrickPool brickPool;
     public int rows = 5; // Nb de rangées
-    public int columns = 11; // Nb de colonnes
+    public int columns = 6; // Nb de colonnes
+    public float spacing = 1f; 
+
+
 
     public Vector2 startPosition = new Vector2(-7.5f, 6f);
 
@@ -80,10 +83,10 @@ public class BricksManager : MonoBehaviour
 
                 if (brick != null)
                 {
-                    float xPos = startPosition.x + col ;
-                    float yPos = startPosition.y - row;
+                    float xPos = startPosition.x + (col * spacing);
+                    float yPos = startPosition.y - (row * spacing) ;
 
-                    //   Debug.Log($"[EnemyManager] {enemy.name} est à la position X : {xPos}; Y : {yPos}");
+                  
 
                     brick.transform.position = new Vector3(xPos, yPos, 0);
 

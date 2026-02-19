@@ -696,6 +696,7 @@ MonoBehaviour:
   brickPool: {fileID: 840639540}
   rows: 5
   columns: 11
+  spacing: 1.05
   startPosition: {x: -7.5, y: 6}
   isExploding: 0
 --- !u!1 &971210680
