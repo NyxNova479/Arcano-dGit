@@ -18,7 +18,7 @@ public class BricksScript : MonoBehaviour
         GameObject outline = new GameObject("Outline");
         outline.transform.SetParent(transform);
         outline.transform.localPosition = Vector3.zero;
-        outline.transform.localScale = Vector3.one * 1.1f;
+        outline.transform.localScale = Vector3.one * 1.2f;
 
         SpriteRenderer osr = outline.AddComponent<SpriteRenderer>();
         osr.sprite = spriteRenderer.sprite;

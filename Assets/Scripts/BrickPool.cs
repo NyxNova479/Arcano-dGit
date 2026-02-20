@@ -84,9 +84,9 @@ public class BrickPool : MonoBehaviour
             case 0: // Type A
                 return 22;
             case 1: // Type B
-                return 22;
+                return UnityEngine.Random.Range(3,22);
             case 2: // Type C
-                return 11;
+                return UnityEngine.Random.Range(3, 5);
             default:
                 return 0;
         }

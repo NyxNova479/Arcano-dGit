@@ -31,6 +31,9 @@ public class PlayerBehaviour : MonoBehaviour
     [Range(0f, 1f)]
     public float boundaryPercentage = 0.8f;
 
+    [SerializeField] GameObject wallPrefab;
+    [SerializeField] BallBehaviour ballBehaviour;
+
     //public Sprite sprite01;
     //public Sprite sprite02;
     //private SpriteRenderer spriteRenderer;
@@ -67,6 +70,8 @@ public class PlayerBehaviour : MonoBehaviour
         //spriteRenderer = GetComponent<SpriteRenderer>();
 
         CalculateBoundary();
+        Instantiate(wallPrefab, new Vector2(-boundary-0.5f, 0), Quaternion.identity);
+        Instantiate(wallPrefab, new Vector2(boundary+0.5f, 0), Quaternion.identity);
     }
 
 
@@ -85,7 +90,7 @@ public class PlayerBehaviour : MonoBehaviour
     void FixedUpdate()
     {
 
-        //if (GameManager.Instance.IsPaused) return;
+        if (GameManager.Instance.IsPaused) return;
 
         if (Mathf.Approximately(targetSpeed - currentSpeed, 0) && currentState != PlayerState.Idle)
         {
@@ -132,6 +137,10 @@ public class PlayerBehaviour : MonoBehaviour
 
         Debug.Log($"State : {currentState}, Current Speed : {currentSpeed}, Target Speed : {targetSpeed}, Move Input :! {moveInput}, Decel Time : {decelTime}, Accel Time : {accelTime}");
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ballBehaviour.isLaunched = true;
+        }
     }
 
     private void HandheldMovePressed(InputAction.CallbackContext ctx)
@@ -230,6 +239,7 @@ public class PlayerBehaviour : MonoBehaviour
         // Gizmo.DrawLine(startposition, endposition)
         Gizmos.DrawLine(new Vector3(-boundary, -10, 0), new Vector3(-boundary, 10, 0));
         Gizmos.DrawLine(new Vector3(boundary, -10, 0), new Vector3(boundary, 10, 0));
+        
     }
     #endregion
 }

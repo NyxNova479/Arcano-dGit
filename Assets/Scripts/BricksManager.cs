@@ -23,7 +23,7 @@ public class BricksManager : MonoBehaviour
 
 
 
-    public Vector2 startPosition = new Vector2(-7.5f, 6f);
+    public Vector2 startPosition = new Vector2(-15f, -2f);
 
 
     private GameObject[,] bricks;
@@ -71,11 +71,16 @@ public class BricksManager : MonoBehaviour
     {
         var bricksTypes = brickPool.GetBrickType();
 
+        float totalWidth = (columns - 1) * spacing;
+        float totalHeight = (rows - 1) * 0.8f;
 
+        Vector2 centeredStartPosition = new Vector2(
+            -totalWidth / 2f,
+             totalHeight );
 
         for (int row = 0; row < rows; row++)
         {
-            var bricksType = GetBrickTypeForRow(row, bricksTypes);
+            var bricksType = GetRandomBrickType(bricksTypes);
 
             for (int col = 0; col < columns; col++)
             {
@@ -83,8 +88,8 @@ public class BricksManager : MonoBehaviour
 
                 if (brick != null)
                 {
-                    float xPos = startPosition.x + (col * spacing);
-                    float yPos = startPosition.y - (row * spacing) ;
+                    float xPos = centeredStartPosition.x + (col * spacing);
+                    float yPos = centeredStartPosition.y - (row * 0.4f) ;
 
                   
 
@@ -328,20 +333,9 @@ public class BricksManager : MonoBehaviour
     //}
     
 
-    private BricksData.BrickType GetBrickTypeForRow(int row, List<BricksData.BrickType> brickTypes)
+    private BricksData.BrickType GetRandomBrickType(List<BricksData.BrickType> brickTypes)
     {
-        if (row == 0) // 1er ligne : Type C
-        {
-            return brickTypes[2];
-        }
-        else if (row <= 2) // 2e et 3e lignes : Type B
-        {
-            return brickTypes[1];
-
-        }
-        else // 4e et 5e lignes : Type A
-        {
-            return brickTypes[0];
-        }
+        int rand = Random.Range(0, brickTypes.Count-1);
+        return brickTypes[rand];
     }
 }
