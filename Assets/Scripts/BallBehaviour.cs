@@ -9,36 +9,11 @@ public class BallBehaviour : MonoBehaviour
     public bool isLaunched = false;
 
     public int bounces = 5;
-    private float ballSpeed = 0.05f;
+    private float ballSpeed = 5f;
     private float delta = 0;
 
-    private void OnDrawGizmos()
-    {
-        Vector2 origin = transform.position;
-        Vector2 dir = transform.right;
-        Ray ray = new Ray(origin, dir);
-
-        Gizmos.DrawLine(origin, origin + dir);
-
-        for (int i = 0; i < bounces; i++)
-        {
-
-
-            if ((Physics.Raycast(ray, out RaycastHit hit)))
-            {
-                Gizmos.DrawSphere(hit.point, 0.1f);
-                Vector2 reflected = Reflect(ray.direction, hit.normal);
-                Gizmos.color = Color.Lerp(Color.white, Color.red, i / bounces);
-                Gizmos.DrawLine(hit.point, (Vector2)hit.point + reflected);
-                ray.direction = reflected;
-                ray.origin = hit.point;
-
-
-            }
-            else break;
-        }
-
-    }
+    public Vector2 direction = Vector2.one;
+ 
 
 
 
@@ -50,8 +25,8 @@ public class BallBehaviour : MonoBehaviour
         }
         else
         {
-            delta += Time.deltaTime;
-            transform.position = new Vector2(transform.position.x, transform.position.y + ballSpeed * delta); 
+            delta = Time.deltaTime;
+            transform.position += (Vector3)direction * ballSpeed * delta; 
         }
         
 
@@ -60,8 +35,8 @@ public class BallBehaviour : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Vector2 reflected= Reflect(transform.position, collision.gameObject.transform.position);
-        transform.position = reflected;
+        direction = Reflect(direction.normalized, collision.contacts[0].normal);
+        Debug.Log(direction);
     }
 
     private Vector2 Reflect(Vector2 d, Vector2 n)

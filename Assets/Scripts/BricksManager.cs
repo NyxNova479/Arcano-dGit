@@ -80,10 +80,11 @@ public class BricksManager : MonoBehaviour
 
         for (int row = 0; row < rows; row++)
         {
-            var bricksType = GetRandomBrickType(bricksTypes);
+            
 
             for (int col = 0; col < columns; col++)
             {
+                var bricksType = GetRandomBrickType(bricksTypes);
                 GameObject brick = brickPool.GetBrick(bricksType.prefab);
 
                 if (brick != null)
@@ -335,7 +336,7 @@ public class BricksManager : MonoBehaviour
 
     private BricksData.BrickType GetRandomBrickType(List<BricksData.BrickType> brickTypes)
     {
-        int rand = Random.Range(0, brickTypes.Count-1);
+        int rand = Random.Range(0, brickTypes.Count);
         return brickTypes[rand];
     }
 }
