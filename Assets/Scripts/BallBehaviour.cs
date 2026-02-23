@@ -8,11 +8,10 @@ public class BallBehaviour : MonoBehaviour
 
     public bool isLaunched = false;
 
-    public int bounces = 5;
     private float ballSpeed = 5f;
     private float delta = 0;
 
-    public Vector2 direction = Vector2.one;
+    public Vector3 direction = new Vector3(0,1,0);
  
 
 
@@ -26,7 +25,7 @@ public class BallBehaviour : MonoBehaviour
         else
         {
             delta = Time.deltaTime;
-            transform.position += (Vector3)direction * ballSpeed * delta; 
+            transform.position += direction * ballSpeed * delta; 
         }
         
 
