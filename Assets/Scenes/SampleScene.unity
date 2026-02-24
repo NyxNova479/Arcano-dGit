@@ -1154,6 +1154,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall
       objectReference: {fileID: 0}
+    - target: {fileID: 7115069863379768604, guid: cb602023b2f561b418b006f0fa77a73f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1635,6 +1639,10 @@ PrefabInstance:
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 6392179705173807657}
+    - target: {fileID: 2034919355844435387, guid: 4b7760c1bcde8574798914534995b81b, type: 3}
+      propertyPath: collisionMask.m_Bits
+      value: 448
+      objectReference: {fileID: 0}
     - target: {fileID: 4628015554099578301, guid: 4b7760c1bcde8574798914534995b81b, type: 3}
       propertyPath: m_Name
       value: Ball

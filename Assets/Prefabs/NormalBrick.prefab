@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4417654462190933013}
   - component: {fileID: 911292097668896341}
   - component: {fileID: 8193771438302572824}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: NormalBrick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0

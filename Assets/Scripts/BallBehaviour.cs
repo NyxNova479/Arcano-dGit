@@ -1,76 +1,101 @@
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.Rendering.DebugUI.Table;
 
 public class BallBehaviour : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject player;
-    [SerializeField] Transform playerTransform;
+    [Header("References")]
+    [SerializeField] private Transform playerTransform;
 
-    private float playerBoundaryX;
-    private float ballSpeed = 5f;
-    private float delta = 0;
+    [Header("Settings")]
+    [SerializeField] private float ballSpeed = 6f;
+    [SerializeField] private float ballRadius = 0.25f;
+    [SerializeField] private LayerMask collisionMask;
 
     public bool isLaunched = false;
-    bool boundaryReached = false;
 
-    public Vector3 direction = new Vector3(0,1,0);
-    public Vector2 normal;
+    private Vector2 direction = Vector2.up;
 
-
-
-    private void Update()
+    void FixedUpdate()
     {
         if (!isLaunched)
         {
-            transform.position = new Vector2(playerTransform.position.x, playerTransform.position.y + 0.5f);
-        }
-        else
-        {
-            delta = Time.deltaTime;
-            transform.position += direction * ballSpeed * delta; 
+            transform.position = new Vector2(
+                playerTransform.position.x,
+                playerTransform.position.y + 0.5f
+            );
+            return;
         }
 
-        if (ReachedBoundary(gameObject)) boundaryReached = true;
-
+        MoveBall();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void MoveBall()
     {
-        if (boundaryReached)
+        float remainingDistance = ballSpeed * Time.fixedDeltaTime;
+
+        int safetyCounter = 0; // évite boucle infinie
+
+        while (remainingDistance > 0.0001f && safetyCounter < 3)
         {
-            normal = (transform.position - collision.transform.position).normalized;
+            safetyCounter++;
+
+            RaycastHit2D hit = Physics2D.CircleCast(
+                transform.position,
+                ballRadius,
+                direction,
+                remainingDistance,
+                collisionMask
+            );
+
+            if (hit.collider != null)
+            {
+                // On avance jusqu’au point d’impact exact
+                transform.position += (Vector3)(direction * hit.distance);
+
+                remainingDistance -= hit.distance;
+
+                if (hit.collider.CompareTag("Player"))
+                {
+                    HandlePaddleBounce(hit);
+                }
+                else
+                {
+                    direction = Vector2.Reflect(direction, hit.normal);
+                }
+                if (Mathf.Abs(direction.y) < 0.2f)
+                {
+                    direction.y = Mathf.Sign(direction.y) * 0.2f;
+                    direction.Normalize();
+                }
+
+                
+
+                // Petit offset pour sortir proprement de la surface
+                transform.position += (Vector3)(direction * 0.001f);
+            }
+            else
+            {
+                transform.position += (Vector3)(direction * remainingDistance);
+                remainingDistance = 0;
+            }
         }
-        normal = (transform.position - collision.transform.position).normalized;
-        direction = Reflect(direction.normalized, normal);
-        Debug.Log(direction);
     }
 
-
-
-
-    private Vector2 Reflect(Vector2 d, Vector2 n)
+    private void HandlePaddleBounce(RaycastHit2D hit)
     {
-        return d - 2 * Vector2.Dot(n, d) * n;
+        float paddleWidth = hit.collider.bounds.size.x;
+        float hitOffset = hit.point.x - hit.collider.bounds.center.x;
+
+        float normalizedOffset = hitOffset / (paddleWidth / 2f);
+
+        direction = new Vector2(normalizedOffset, 1f).normalized;
     }
 
-    private bool ReachedBoundary(GameObject enemy)
+    public void Launch()
     {
-        float xPos = enemy.transform.position.x;
-    
-        if (xPos >= playerBoundaryX)
+        if (!isLaunched)
         {
-    
-            return true;
+            isLaunched = true;
+            direction = new Vector2(Random.Range(-0.5f, 0.5f), 1f).normalized;
         }
-        if (xPos <= -playerBoundaryX)
-        {
-    
-            return true;
-        }
-    
-        return false;
-    
     }
 }
