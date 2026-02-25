@@ -87,6 +87,8 @@ public class BrickPool : MonoBehaviour
                 return 22;
             case 2: // Type C
                 return 11;
+            case 3: // Type D
+                return 11;
             default:
                 return 0;
         }

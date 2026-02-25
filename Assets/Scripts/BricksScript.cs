@@ -2,14 +2,15 @@ using UnityEngine;
 
 public class BricksScript : MonoBehaviour
 {
-
     public BricksData.BrickType BrickType;
     public int ScoreData;
 
-
     private SpriteRenderer spriteRenderer;
 
+    private int currentHP;
 
+    private BricksManager manager;
+    private GameObject prefab;
 
     private void Awake()
     {
@@ -27,10 +28,45 @@ public class BricksScript : MonoBehaviour
         osr.sortingOrder = spriteRenderer.sortingOrder - 1;
     }
 
+    private void OnEnable()
+    {
+        currentHP = BrickType.hitToBreak;
+    }
 
+    public void Init(BricksManager manager, GameObject prefab)
+    {
+        this.manager = manager;
+        this.prefab = prefab;
 
+        // On copie la valeur depuis le ScriptableObject
+        currentHP = BrickType.hitToBreak;
+    }
 
+    public void OnHit()
+    {
+        currentHP--;
 
+        if (currentHP <= 0)
+        {
+            return;
+        }
+        else if (currentHP <= 1)
+        {
+            manager.ReturnEnemy(gameObject, prefab);
+        }
+        else
+        {
+            UpdateVisual();
+        }
+    }
 
-
+    private void UpdateVisual()
+    {
+        // Optionnel : changer la couleur selon la vie restante
+        if (spriteRenderer != null)
+        {
+            float ratio = (float)currentHP / BrickType.hitToBreak;
+            spriteRenderer.color = Color.Lerp(Color.black, Color.white, ratio);
+        }
+    }
 }

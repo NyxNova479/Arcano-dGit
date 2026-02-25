@@ -1,9 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform playerTransform;
+
+
 
     [Header("Settings")]
     [SerializeField] private float ballSpeed = 6f;
@@ -13,6 +15,9 @@ public class BallBehaviour : MonoBehaviour
     public bool isLaunched = false;
 
     private Vector2 direction = Vector2.up;
+
+    private const float SKIN = 0.01f;      // marge anti-blocage
+    private const float MIN_Y = 0.2f;      // empêche angles plats
 
     void FixedUpdate()
     {
@@ -24,6 +29,7 @@ public class BallBehaviour : MonoBehaviour
             );
             return;
         }
+        if (gameObject.transform.position.y <= -7) GameManager.Instance.LoseLife();
 
         MoveBall();
     }
@@ -31,8 +37,7 @@ public class BallBehaviour : MonoBehaviour
     private void MoveBall()
     {
         float remainingDistance = ballSpeed * Time.fixedDeltaTime;
-
-        int safetyCounter = 0; // �vite boucle infinie
+        int safetyCounter = 0;
 
         while (remainingDistance > 0.0001f && safetyCounter < 3)
         {
@@ -48,43 +53,52 @@ public class BallBehaviour : MonoBehaviour
 
             if (hit.collider != null)
             {
-                // On avance jusqu�au point d�impact exact
-                transform.position += (Vector3)(direction * hit.distance);
+                // Avance jusqu’au point de contact (avec skin)
+                float moveDist = Mathf.Max(hit.distance - SKIN, 0f);
+                transform.position += (Vector3)(direction * moveDist);
+                remainingDistance -= moveDist;
 
-                remainingDistance -= hit.distance;
-
+                // Paddle → angle contrôlé
                 if (hit.collider.CompareTag("Player"))
                 {
                     HandlePaddleBounce(hit);
                 }
+                else if (hit.collider.CompareTag("Brick"))
+                {
+                    BricksScript brick = hit.collider.GetComponent<BricksScript>();
+                    if (brick != null)
+                        brick.OnHit();
+                    direction = Vector2.Reflect(direction, hit.normal).normalized;
+                }
                 else
                 {
-                    direction = Vector2.Reflect(direction, hit.normal);
+                    direction = Vector2.Reflect(direction, hit.normal).normalized;
                 }
-                if (Mathf.Abs(direction.y) < 0.2f)
+
+                // Évite les trajectoires trop horizontales
+                if (Mathf.Abs(direction.y) < MIN_Y)
                 {
-                    direction.y = Mathf.Sign(direction.y) * 0.2f;
+                    direction.y = Mathf.Sign(direction.y == 0 ? 1 : direction.y) * MIN_Y;
                     direction.Normalize();
                 }
 
-                
-
-                // Petit offset pour sortir proprement de la surface
-                transform.position += (Vector3)(direction * 0.001f);
+                // Sort proprement de la surface touchée
+                transform.position += (Vector3)(direction * SKIN);
             }
             else
             {
                 transform.position += (Vector3)(direction * remainingDistance);
-                remainingDistance = 0;
+                remainingDistance = 0f;
             }
         }
     }
+
+
 
     private void HandlePaddleBounce(RaycastHit2D hit)
     {
         float paddleWidth = hit.collider.bounds.size.x;
         float hitOffset = hit.point.x - hit.collider.bounds.center.x;
-
         float normalizedOffset = hitOffset / (paddleWidth / 2f);
 
         direction = new Vector2(normalizedOffset, 1f).normalized;
@@ -95,7 +109,10 @@ public class BallBehaviour : MonoBehaviour
         if (!isLaunched)
         {
             isLaunched = true;
-            direction = new Vector2(Random.Range(-0.5f, 0.5f), 1f).normalized;
+            direction = new Vector2(
+                Random.Range(-0.5f, 0.5f),
+                1f
+            ).normalized;
         }
     }
 }

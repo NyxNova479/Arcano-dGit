@@ -1,5 +1,7 @@
 using TMPro;
 using UnityEngine;
+using System.Collections;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -18,10 +20,12 @@ public class GameManager : MonoBehaviour
     public int highScore = 0;
 
     [SerializeField]
-    private int _lives = 2;
+    private int _lives = 3;
 
     [SerializeField]
     private GameObject playerPrefab;
+    [SerializeField]
+    private BallBehaviour ballBehaviour;
 
     [SerializeField]
     private TextMeshProUGUI _scoreUI;
@@ -51,7 +55,7 @@ public class GameManager : MonoBehaviour
         controls = new InputSystem_Actions();
         //controls.UI.Pause.performed += ctx => Pause();
 
-
+        _livesText.text = _lives.ToString();
     }
 
     private void Start()
@@ -134,30 +138,33 @@ public class GameManager : MonoBehaviour
 
         if (_lives == 0)
         {
-            GameOver();
+            StartCoroutine(ShowGameOver());
         }
         else
         {
 
 
-            playerPrefab.transform.position = new Vector2(0, -9.24f);
-            playerPrefab.SetActive(true);
+            playerPrefab.transform.position = new Vector2(0f, -4f);
+            ballBehaviour.isLaunched = false;
             _livesText.text = (_lives + 1).ToString();
 
         }
-        if (_livesImage == null) return;
-        else if (_lives == 2)
-        {
-            _livesImage[1].SetActive(false);
-        }
-        else _livesImage[0].SetActive(false);
+        //if (_livesImage == null) return;
+        //else if (_lives == 2)
+        //{
+        //    _livesImage[1].SetActive(false);
+        //}
+        //else _livesImage[0].SetActive(false);
     }
 
-    public void GameOver()
+    private IEnumerator ShowGameOver()
     {
-        // TODO : Implémenter le game over
-        gameOverUI.text = "Game Over";
-        SaveScore();
+        //audioSource.PlayOneShot(gameOverSound);
+        for (int i = 0; i < "Game Over".Length; i++)
+        {
+            gameOverUI.text += "Game Over"[i];
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 
     public void CompletedLevel()

@@ -101,6 +101,7 @@ public class BricksManager : MonoBehaviour
                     {
                         bricksScript.BrickType = bricksType;
                         bricksScript.ScoreData = bricksType.points;
+                        bricksScript.Init(this, bricksType.prefab);
                     }
                     bricks[row, col] = brick;
                     remainingBricks++;
