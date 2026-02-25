@@ -17,35 +17,7 @@ public class BrickPool : MonoBehaviour
     }
 
 
-    void Start()
-    {
-        // Initialiser un pool pour chaque type d'ennemi avec des quantités spécifiques
-        for (int i = 0; i < bricksData.bricksTypes.Count; i++)
-        {
-            var bricksType = bricksData.bricksTypes[i];
-
-
-            if (poolDictionary.ContainsKey(bricksType.prefab))
-            {
-                Debug.LogWarning($"Le prefab {bricksType.prefab.name} pour le type {bricksType.name} est déjà dans le pool");
-                continue;
-            }
-
-            int poolSize = GetPoolSizeForBrickType(i);
-
-            Queue<GameObject> brickQueue = new Queue<GameObject>();
-
-            for (int j = 0; j < poolSize; j++)
-            {
-                GameObject brick = Instantiate(bricksType.prefab,transform);
-                brick.transform.name = bricksType.prefab.name;
-                brick.SetActive(false);
-                brickQueue.Enqueue(brick);
-            }
-
-            poolDictionary.Add(bricksType.prefab, brickQueue);
-        }
-    }
+    
 
     public GameObject GetBrick(GameObject prefab)
     {
@@ -91,13 +63,13 @@ public class BrickPool : MonoBehaviour
         switch (index)
         {
             case 0: // Type A
-                return 12;
+                return 30;
             case 1: // Type B
-                return 12;
+                return 30;
             case 2: // Type C
-                return 5;
+                return 30;
             case 3: // Type D
-                return 6;
+                return 30;
             default:
                 return 0;
         }

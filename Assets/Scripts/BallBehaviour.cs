@@ -11,6 +11,7 @@ public class BallBehaviour : MonoBehaviour
     [SerializeField] private float ballSpeed = 6f;
     [SerializeField] private float ballRadius = 0.25f;
     [SerializeField] private LayerMask collisionMask;
+    [SerializeField] GameObject sparkPrefab;
 
     public bool isLaunched = false;
 
@@ -18,6 +19,11 @@ public class BallBehaviour : MonoBehaviour
 
     private const float SKIN = 0.01f;      // marge anti-blocage
     private const float MIN_Y = 0.2f;      // empêche angles plats
+
+    private void Awake()
+    {
+        gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 0.9f, 1f);
+    }
 
     void FixedUpdate()
     {
@@ -53,6 +59,7 @@ public class BallBehaviour : MonoBehaviour
 
             if (hit.collider != null)
             {
+                Instantiate(sparkPrefab, hit.point, Quaternion.identity);
                 // Avance jusqu’au point de contact (avec skin)
                 float moveDist = Mathf.Max(hit.distance - SKIN, 0f);
                 transform.position += (Vector3)(direction * moveDist);
