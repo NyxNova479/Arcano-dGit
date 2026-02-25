@@ -62,9 +62,9 @@ public class GameManager : MonoBehaviour
     {
         highScore = PlayerPrefs.GetInt("Score", score);
 
-        if (highScore.ToString().Length == 0)
+        if (highScore.ToString().Length <= 0)
         {
-            _highScore.text = "000" + highScore.ToString();
+            _highScore.text = "0000";
             return;
         }
 
@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
 
 
 
-    private void RestScore() => score = 0;
+    private void ResetScore() => score = 0;
 
 
     public void LoseLife()
@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
 
             playerPrefab.transform.position = new Vector2(0f, -4f);
             ballBehaviour.isLaunched = false;
-            _livesText.text = (_lives + 1).ToString();
+            _livesText.text = _lives.ToString();
 
         }
         //if (_livesImage == null) return;
@@ -172,7 +172,7 @@ public class GameManager : MonoBehaviour
         // TODO : Implémenter le CompletedLevel
         bricksManager.SpawnBricks();
         
-        _lives = 2;
+        _lives = 3;
     }
 
     private void SaveScore()

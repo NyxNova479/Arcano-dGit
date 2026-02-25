@@ -15,7 +15,7 @@ MonoBehaviour:
   bricksTypes:
   - name: Normal
     points: 20
-    hitToBreak: 1
+    hitToBreak: 2
     color: {r: 0, g: 0, b: 0, a: 0}
     prefab: {fileID: 6134954636494406993, guid: ec0cfd5bde10a284b994053156eeb387, type: 3}
     isTranslucid: 0
@@ -29,8 +29,15 @@ MonoBehaviour:
     hasBonus: 0
   - name: Bonus
     points: 15
-    hitToBreak: 1
+    hitToBreak: 2
     color: {r: 0, g: 0, b: 0, a: 0}
     prefab: {fileID: 991975673456800506, guid: 993bdb03f0ba9584981b6142d6dc19f1, type: 3}
     isTranslucid: 0
     hasBonus: 1
+  - name: Indestructible
+    points: 0
+    hitToBreak: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
+    prefab: {fileID: 4014273264997370609, guid: 8921ed39d71a24747a2d49ce67c95ae1, type: 3}
+    isTranslucid: 0
+    hasBonus: 0

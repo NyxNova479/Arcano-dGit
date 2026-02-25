@@ -11,7 +11,10 @@ public class BrickPool : MonoBehaviour
 
     private Dictionary<GameObject, Queue<GameObject>> poolDictionary = new Dictionary<GameObject, Queue<GameObject>>();
 
-
+    private void Awake()
+    {
+        InitializePool();
+    }
 
 
     void Start()
@@ -34,7 +37,7 @@ public class BrickPool : MonoBehaviour
 
             for (int j = 0; j < poolSize; j++)
             {
-                GameObject brick = Instantiate(bricksType.prefab);
+                GameObject brick = Instantiate(bricksType.prefab,transform);
                 brick.transform.name = bricksType.prefab.name;
                 brick.SetActive(false);
                 brickQueue.Enqueue(brick);
@@ -46,15 +49,21 @@ public class BrickPool : MonoBehaviour
 
     public GameObject GetBrick(GameObject prefab)
     {
-        if (poolDictionary.TryGetValue(prefab, out Queue<GameObject> brickQueue) && brickQueue.Count > 0)
+        if (!poolDictionary.ContainsKey(prefab))
         {
-            GameObject brick = brickQueue.Dequeue();
-            brick.SetActive(true);
-
-            return brick;
+            Debug.LogError($"Prefab {prefab.name} non trouvé dans le pool");
+            return null;
         }
 
-        return null;
+        if (poolDictionary[prefab].Count == 0)
+        {
+            Debug.LogWarning($"Pool vide pour {prefab.name}");
+            return null;
+        }
+
+        GameObject brick = poolDictionary[prefab].Dequeue();
+        brick.SetActive(true);
+        return brick;
     }
 
     public void ReturnToPool(GameObject brick, GameObject prefab)
@@ -82,20 +91,43 @@ public class BrickPool : MonoBehaviour
         switch (index)
         {
             case 0: // Type A
-                return 22;
+                return 12;
             case 1: // Type B
-                return 22;
+                return 12;
             case 2: // Type C
-                return 11;
+                return 5;
             case 3: // Type D
-                return 11;
+                return 6;
             default:
                 return 0;
         }
     }
 
-    void Update()
+    private void InitializePool()
     {
+        for (int i = 0; i < bricksData.bricksTypes.Count; i++)
+        {
+            var bricksType = bricksData.bricksTypes[i];
 
+            if (poolDictionary.ContainsKey(bricksType.prefab))
+                continue;
+
+            int poolSize = GetPoolSizeForBrickType(i);
+            Queue<GameObject> brickQueue = new Queue<GameObject>();
+
+            for (int j = 0; j < poolSize; j++)
+            {
+                GameObject brick = Instantiate(bricksType.prefab, transform);
+                brick.name = bricksType.prefab.name;
+                brick.SetActive(false);
+
+                // Position neutre hors écran (sécurité)
+                brick.transform.position = Vector3.one * 9999f;
+
+                brickQueue.Enqueue(brick);
+            }
+
+            poolDictionary.Add(bricksType.prefab, brickQueue);
+        }
     }
 }
