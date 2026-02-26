@@ -113,7 +113,7 @@ public class BricksManager : MonoBehaviour
 
         }
 
-
+        FindFirstObjectByType<SpecialPowerManager>().ChooseRandomPower();
     }
 
     public void ClearBricks()
@@ -361,5 +361,22 @@ public class BricksManager : MonoBehaviour
     {
         int rand = Random.Range(0, brickTypes.Count);
         return brickTypes[rand];
+    }
+    public List<GameObject> GetActiveBricks()
+    {
+        List<GameObject> activeBricks = new List<GameObject>();
+
+        for (int row = 0; row < rows; row++)
+        {
+            for (int col = 0; col < columns; col++)
+            {
+                if (bricks[row, col] != null && bricks[row, col].activeSelf)
+                {
+                    activeBricks.Add(bricks[row, col]);
+                }
+            }
+        }
+
+        return activeBricks;
     }
 }

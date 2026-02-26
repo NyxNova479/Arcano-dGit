@@ -12,6 +12,9 @@ public class BallBehaviour : MonoBehaviour
     [SerializeField] private float ballRadius = 0.25f;
     [SerializeField] private LayerMask collisionMask;
     [SerializeField] GameObject sparkPrefab;
+    [SerializeField] private SpecialPowerManager powerManager;
+    [SerializeField] private Revive revive;
+
 
     public bool slowOnDownward = false;
     [SerializeField] float slowMultiplier = 0.6f;
@@ -24,7 +27,7 @@ public class BallBehaviour : MonoBehaviour
     private const float SKIN = 0.01f;      // marge anti-blocage
     private const float MIN_Y = 0.2f;      // empêche angles plats
 
-
+    public float energy = 0f;
 
     private void Awake()
     {
@@ -43,7 +46,7 @@ public class BallBehaviour : MonoBehaviour
         }
         if (gameObject.transform.position.y <= -7)
         {
-            GameManager.Instance.LoseLife();
+            BallLost();
         }
         MoveBall();
     }
@@ -58,6 +61,11 @@ public class BallBehaviour : MonoBehaviour
         }
 
         transform.position += (Vector3)direction * currentSpeed * Time.deltaTime;
+
+        if (isLaunched)
+        {
+            energy += Time.deltaTime;
+        }
     }
 
     private void MoveBall()
@@ -143,5 +151,23 @@ public class BallBehaviour : MonoBehaviour
         }
     }
 
+    private void BallLost()
+    {
+        if (powerManager.currentPower == SpecialPowerType.Revive)
+        {
+            if (revive.TryRevive(this))
+            {
+                powerManager.ConsumePower();
+                return;
+            }
+        }
 
+        GameManager.Instance.LoseLife();
+    }
+
+    public void ResetBall()
+    {
+        isLaunched = false;
+        energy = 0f;
+    }
 }
