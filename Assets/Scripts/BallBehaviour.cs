@@ -35,8 +35,10 @@ public class BallBehaviour : MonoBehaviour
             );
             return;
         }
-        if (gameObject.transform.position.y <= -7) GameManager.Instance.LoseLife();
-
+        if (gameObject.transform.position.y <= -7)
+        {
+            GameManager.Instance.LoseLife();
+        }
         MoveBall();
     }
 

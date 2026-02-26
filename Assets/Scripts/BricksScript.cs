@@ -54,6 +54,10 @@ public class BricksScript : MonoBehaviour
         {
             manager.ReturnEnemy(gameObject, prefab);
         }
+        //else if (currentHP <= 1 && this.GetComponent<BrickPool>().GetBrick== )
+        //{
+        //    manager.ReturnEnemy(gameObject, prefab);
+        //}
         else
         {
             UpdateVisual();

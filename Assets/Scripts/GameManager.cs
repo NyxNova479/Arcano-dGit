@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
 
     public BricksManager bricksManager;
     [SerializeField]
+    private GameObject gameOverPanel;
+    [SerializeField]
     private TextMeshProUGUI gameOverUI;
 
     private void Awake()
@@ -136,8 +138,10 @@ public class GameManager : MonoBehaviour
         _lives--;
 
 
-        if (_lives == 0)
+        if (_lives <= 0)
         {
+            _livesText.text = "0";
+            ballBehaviour.gameObject.SetActive(false);
             StartCoroutine(ShowGameOver());
         }
         else
@@ -159,12 +163,15 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ShowGameOver()
     {
+        
+        gameOverPanel.SetActive(true);
         //audioSource.PlayOneShot(gameOverSound);
         for (int i = 0; i < "Game Over".Length; i++)
         {
             gameOverUI.text += "Game Over"[i];
             yield return new WaitForSeconds(0.5f);
         }
+        Time.timeScale = 0f;
     }
 
     public void CompletedLevel()

@@ -59,9 +59,12 @@ public class BricksManager : MonoBehaviour
 
 
     }
-    private void Update()
+    private void FixedUpdate()
     {
-
+        if (remainingBricks<= 0)
+        {
+            GameManager.Instance.CompletedLevel();
+        }
 
     }
 
