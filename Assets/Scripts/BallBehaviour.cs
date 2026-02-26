@@ -13,6 +13,10 @@ public class BallBehaviour : MonoBehaviour
     [SerializeField] private LayerMask collisionMask;
     [SerializeField] GameObject sparkPrefab;
 
+    public bool slowOnDownward = false;
+    [SerializeField] float slowMultiplier = 0.6f;
+    [SerializeField] float slowDuration = 8f;
+
     public bool isLaunched = false;
 
     private Vector2 direction = Vector2.up;
@@ -42,6 +46,18 @@ public class BallBehaviour : MonoBehaviour
             GameManager.Instance.LoseLife();
         }
         MoveBall();
+    }
+
+    private void Update()
+    {
+        float currentSpeed = ballSpeed;
+
+        if (slowOnDownward && direction.y < 0)
+        {
+            currentSpeed *= slowMultiplier;
+        }
+
+        transform.position += (Vector3)direction * currentSpeed * Time.deltaTime;
     }
 
     private void MoveBall()
@@ -126,4 +142,6 @@ public class BallBehaviour : MonoBehaviour
             ).normalized;
         }
     }
+
+
 }
