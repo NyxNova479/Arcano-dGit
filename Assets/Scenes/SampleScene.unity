@@ -1877,6 +1877,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6146213393249210220, guid: 67cb5bec5b54c3e4aa63483571601ebe, type: 3}
+      propertyPath: MaxSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6146213393249210220, guid: 67cb5bec5b54c3e4aa63483571601ebe, type: 3}
       propertyPath: wallPrefab
       value: 
       objectReference: {fileID: 7115069863379768604, guid: cb602023b2f561b418b006f0fa77a73f, type: 3}
@@ -1884,6 +1888,18 @@ PrefabInstance:
       propertyPath: ballBehaviour
       value: 
       objectReference: {fileID: 635113267}
+    - target: {fileID: 6146213393249210220, guid: 67cb5bec5b54c3e4aa63483571601ebe, type: 3}
+      propertyPath: accelFrameDuration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6146213393249210220, guid: 67cb5bec5b54c3e4aa63483571601ebe, type: 3}
+      propertyPath: boundaryPercentage
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6146213393249210220, guid: 67cb5bec5b54c3e4aa63483571601ebe, type: 3}
+      propertyPath: decelFrameDuration
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6146213393249210220, guid: 67cb5bec5b54c3e4aa63483571601ebe, type: 3}
       propertyPath: decelValue.m_Curve.Array.size
       value: 2
@@ -1985,6 +2001,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1225565341524525116, guid: 4b7760c1bcde8574798914534995b81b, type: 3}
+      propertyPath: m_PreviewTimeScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1225565341524525116, guid: 4b7760c1bcde8574798914534995b81b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 

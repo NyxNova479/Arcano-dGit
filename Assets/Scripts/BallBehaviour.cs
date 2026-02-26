@@ -8,7 +8,7 @@ public class BallBehaviour : MonoBehaviour
 
 
     [Header("Settings")]
-    [SerializeField] private float ballSpeed = 6f;
+    public float ballSpeed = 5f;
     [SerializeField] private float ballRadius = 0.25f;
     [SerializeField] private LayerMask collisionMask;
     [SerializeField] GameObject sparkPrefab;
@@ -19,6 +19,8 @@ public class BallBehaviour : MonoBehaviour
 
     private const float SKIN = 0.01f;      // marge anti-blocage
     private const float MIN_Y = 0.2f;      // empêche angles plats
+
+
 
     private void Awake()
     {

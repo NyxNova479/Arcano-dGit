@@ -116,6 +116,25 @@ public class BricksManager : MonoBehaviour
 
     }
 
+    public void ClearBricks()
+    {
+        for (int row = 0; row < rows; row++)
+        {
+            for (int col = 0; col < columns; col++)
+            {
+                if (bricks[row, col] != null)
+                {
+                    brickPool.ReturnToPool(bricks[row, col],
+                        bricks[row, col].GetComponent<BricksScript>().BrickType.prefab);
+
+                    bricks[row, col] = null;
+                }
+            }
+        }
+
+        remainingBricks = 0;
+    }
+
     //IEnumerator HandheldEnemyMovement()
     //{
     //    while (remainingBricks > 0)

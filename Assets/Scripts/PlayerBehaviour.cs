@@ -70,8 +70,8 @@ public class PlayerBehaviour : MonoBehaviour
         //spriteRenderer = GetComponent<SpriteRenderer>();
 
         CalculateBoundary();
-        Instantiate(wallPrefab, new Vector2(-boundary-0.5f, 0), Quaternion.identity);
-        Instantiate(wallPrefab, new Vector2(boundary+0.5f, 0), Quaternion.identity);
+        Instantiate(wallPrefab, new Vector2(-boundary-1f, 0), Quaternion.identity);
+        Instantiate(wallPrefab, new Vector2(boundary+1f, 0), Quaternion.identity);
     }
 
 

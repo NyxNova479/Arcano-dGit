@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Audio;
@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
     private GameObject gameOverPanel;
     [SerializeField]
     private TextMeshProUGUI gameOverUI;
+
+    private bool isGameOver = false;
 
     private void Awake()
     {
@@ -96,6 +98,14 @@ public class GameManager : MonoBehaviour
         //controls.UI.Pause.Disable();
     }
 
+    private void Update()
+    {
+        if (isGameOver && Input.anyKeyDown)
+        {
+            RestartGame();
+        }
+    }
+
     private void Pause()
     {
         IsPaused = !IsPaused;
@@ -149,7 +159,9 @@ public class GameManager : MonoBehaviour
 
 
             playerPrefab.transform.position = new Vector2(0f, -4f);
+            ballBehaviour.gameObject.SetActive(false);
             ballBehaviour.isLaunched = false;
+            ballBehaviour.gameObject.SetActive(true);
             _livesText.text = _lives.ToString();
 
         }
@@ -163,28 +175,68 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ShowGameOver()
     {
-        
+        isGameOver = true;
         gameOverPanel.SetActive(true);
-        //audioSource.PlayOneShot(gameOverSound);
+        gameOverUI.text = "";
+
         for (int i = 0; i < "Game Over".Length; i++)
         {
             gameOverUI.text += "Game Over"[i];
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.3f);
         }
+
+        gameOverUI.text += "\n\n Press Any Key To Restart";
+
+        SaveScore();
+
         Time.timeScale = 0f;
     }
 
     public void CompletedLevel()
     {
-        // TODO : Impl�menter le CompletedLevel
+        // TODO : Implémenter le CompletedLevel
+        ballBehaviour.isLaunched = false;
+        ballBehaviour.ballSpeed += Random.Range(-2, 0.5f);
         bricksManager.SpawnBricks();
         
         _lives = 3;
     }
 
+    private void RestartGame()
+    {
+        Time.timeScale = 1f;
+        isGameOver = false;
+
+        gameOverPanel.SetActive(false);
+        gameOverUI.text = "";
+
+        // Reset score
+        score = 0;
+        _scoreUI.text = "0000";
+
+        // Reset vies
+        _lives = 3;
+        _livesText.text = _lives.ToString();
+
+        // Reset player
+        playerPrefab.transform.position = new Vector2(0f, -4f);
+
+        // Reset balle
+        ballBehaviour.gameObject.SetActive(false);
+        ballBehaviour.isLaunched = false;
+        ballBehaviour.gameObject.SetActive(true);
+
+        // Reset bricks
+        bricksManager.ClearBricks();   // 👈 on va l'ajouter
+        bricksManager.SpawnBricks();
+    }
+
     private void SaveScore()
     {
         if (score < highScore) return;
+
+        highScore = score;
+        _highScore.text = highScore.ToString("0000");
 
         PlayerPrefs.SetInt("Score", score);
         PlayerPrefs.Save();
