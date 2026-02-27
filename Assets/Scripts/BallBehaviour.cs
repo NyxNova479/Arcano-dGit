@@ -45,7 +45,7 @@ public class BallBehaviour : MonoBehaviour
             );
             return;
         }
-        if (gameObject.transform.position.y <= -7)
+        if (gameObject.transform.position.y <= -7|| gameObject.transform.position.x <= -16 || gameObject.transform.position.x >= 16)
         {
             BallLost();
         }
@@ -86,7 +86,7 @@ public class BallBehaviour : MonoBehaviour
 
             if (hit.collider != null)
             {
-                audioSource.PlayOneShot(bounceSound, 0.2f);
+                
                 Instantiate(sparkPrefab, hit.point, Quaternion.identity);
                 // Avance jusqu’au point de contact (avec skin)
                 float moveDist = Mathf.Max(hit.distance - SKIN, 0f);
@@ -96,23 +96,27 @@ public class BallBehaviour : MonoBehaviour
                 // Paddle → angle contrôlé
                 if (hit.collider.CompareTag("Player"))
                 {
+                    audioSource.PlayOneShot(bounceSound, 0.2f);
                     HandlePaddleBounce(hit);
                 }
                 else if (hit.collider.CompareTag("Brick") && hit.collider.GetComponent<BricksScript>().BricksType.isTranslucid)
                 {
+                    
                     BricksScript brick = hit.collider.GetComponent<BricksScript>();
                     brick.state = BricksScript.BrickState.Active;
-                    StartCoroutine(brick.RevealBrick(brick));
+                    StartCoroutine(brick.RevealBrick());
 
                 }
                 else if (hit.collider.CompareTag("Brick"))
                 {
+                    audioSource.PlayOneShot(bounceSound, 0.2f);
                     BricksScript brick = hit.collider.GetComponent<BricksScript>();
                     if (brick != null)  brick.OnHit();
                     direction = Vector2.Reflect(direction, hit.normal).normalized;
                 }
                 else
                 {
+                    audioSource.PlayOneShot(bounceSound, 0.2f);
                     direction = Vector2.Reflect(direction, hit.normal).normalized;
                 }
 

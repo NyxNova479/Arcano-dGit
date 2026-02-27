@@ -1460,6 +1460,7 @@ MonoBehaviour:
   pausePanel: {fileID: 33402311}
   levelUpSound: {fileID: 8300000, guid: 4cf8eb0d177bfb24592f29d885285e3f, type: 3}
   gameOverSound: {fileID: 8300000, guid: f3d6b68d062288f44ba01d3fd126567f, type: 3}
+  cheatCodeSound: {fileID: 8300000, guid: be3cf3aa272d15c4ab936327e8cdd866, type: 3}
 --- !u!82 &813155433
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1472,7 +1473,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 36ceafb17dd5bee43b42f736ae874132, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.6
   m_Pitch: 1
   Loop: 1
@@ -1637,7 +1638,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &971210681
 SpriteRenderer:
   m_ObjectHideFlags: 0

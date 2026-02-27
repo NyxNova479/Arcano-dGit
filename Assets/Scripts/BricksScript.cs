@@ -21,6 +21,8 @@ public class BricksScript : MonoBehaviour
 
     public BrickState state;
 
+    private bool isTranslucidRuntime;
+
 
     private void Awake()
     {
@@ -35,23 +37,30 @@ public class BricksScript : MonoBehaviour
         osr.color = Color.black;
         osr.sortingLayerID = spriteRenderer.sortingLayerID;
         osr.sortingOrder = spriteRenderer.sortingOrder - 1;
-        if(state == BrickState.Hidden) BricksType.isTranslucid = true;   
+  
     }
+
+    private bool isTranslucid;
 
     private void Start()
     {
-        currentHP = BricksType.hitToBreak;
-
-        if (BricksType.isTranslucid)
-            InitTranslucid();
-        else
-            InitNormal();
+      
     }
 
     public void Init(BricksManager manager, GameObject prefab)
     {
         this.manager = manager;
         this.prefab = prefab;
+
+        currentHP = BricksType.hitToBreak;
+
+        // IMPORTANT : on copie la valeur du type
+        isTranslucidRuntime = BricksType.isTranslucid;
+
+        if (isTranslucidRuntime)
+            InitTranslucid();
+        else
+            InitNormal();
     }
 
     // ===== INIT =====
@@ -67,7 +76,7 @@ public class BricksScript : MonoBehaviour
     {
         state = BrickState.Hidden;
         spriteRenderer.enabled = true;
-        spriteRenderer.color = new Color(0,spriteRenderer.color.r,spriteRenderer.color.g,spriteRenderer.color.b) ;
+        spriteRenderer.color = new Color(spriteRenderer.color.r,spriteRenderer.color.g,spriteRenderer.color.b, 0.1f) ;
     }
 
 
@@ -100,10 +109,18 @@ public class BricksScript : MonoBehaviour
             spriteRenderer.color = Color.Lerp(Color.red, Color.white, ratio);
         }
     }
-    public IEnumerator RevealBrick(BricksScript brick)
+    public IEnumerator RevealBrick()
     {
         yield return new WaitForSeconds(1f);
-        brick.spriteRenderer.color = new Color(brick.spriteRenderer.color.r, brick.spriteRenderer.color.g, brick.spriteRenderer.color.b, 1);
-        brick.BricksType.isTranslucid = false;
+
+        spriteRenderer.color = new Color(
+            spriteRenderer.color.r,
+            spriteRenderer.color.g,
+            spriteRenderer.color.b,
+            1f
+        );
+
+        isTranslucidRuntime = false;
+        state = BrickState.Active;
     }
 }

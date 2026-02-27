@@ -47,10 +47,30 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] AudioClip levelUpSound;
     [SerializeField] AudioClip gameOverSound;
+    [SerializeField] AudioClip cheatCodeSound;
     private AudioSource audioSource;
 
     private bool isGameOver = false;
     private bool restarted = false;
+
+    private int scoreMultiplier = 1;
+    private bool konamiActivated = false;
+
+    private KeyCode[] konamiCode = new KeyCode[]
+    {
+        KeyCode.UpArrow,
+        KeyCode.UpArrow,
+        KeyCode.DownArrow,
+        KeyCode.DownArrow,
+        KeyCode.LeftArrow,
+        KeyCode.RightArrow,
+        KeyCode.LeftArrow,
+        KeyCode.RightArrow,
+        KeyCode.B,
+        KeyCode.Q
+    };
+
+    private int konamiIndex = 0;
 
     private void Awake()
     {
@@ -109,11 +129,38 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (konamiActivated) return;
+
+        if (Input.anyKeyDown)
+        {
+            if (Input.GetKeyDown(konamiCode[konamiIndex]))
+            {
+                konamiIndex++;
+
+                if (konamiIndex >= konamiCode.Length)
+                {
+                    ActivateKonami();
+                }
+            }
+            else
+            {
+                konamiIndex = 0;
+            }
+        }
         if (isGameOver && Input.anyKeyDown)
         {
             RestartGame();
             restarted = true;
         }
+    }
+
+    private void ActivateKonami()
+    {
+        audioSource.PlayOneShot(cheatCodeSound, 0.5f);
+        scoreMultiplier = 2;
+        konamiActivated = true;
+        Debug.Log("KONAMI ACTIVATED — SCORE x2");
+        AddScore(score);
     }
 
     private void Pause()
@@ -142,10 +189,13 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadSceneAsync(0);
     }
 
-    public void AddScore(int points)
+    public void AddScore(int amount)
     {
 
-        score += points;
+     
+    
+        score += amount * scoreMultiplier;
+    
 
 
 
