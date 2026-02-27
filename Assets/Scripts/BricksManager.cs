@@ -10,7 +10,7 @@ public class BricksManager : MonoBehaviour
     private GameObject player;
     private float playerBoundaryX;
 
-    [SerializeField] BricksData brickData;
+
 
     public BrickPool brickPool;
     public int rows = 5; // Nb de rangées
@@ -28,13 +28,7 @@ public class BricksManager : MonoBehaviour
     private GameObject[,] bricks;
     private int remainingBricks = 0;
 
-    private bool isPaused = false;
-    public bool isExploding = false;
 
-
-
-    private enum MoveState { MoveRight, MoveLeft }
-    private MoveState currentMoveState = MoveState.MoveRight;
 
 
 
@@ -93,7 +87,7 @@ public class BricksManager : MonoBehaviour
                     BricksScript bricksScript = brick.GetComponent<BricksScript>();
                     if (bricksScript != null)
                     {
-                        bricksScript.BrickType = bricksType;
+                        bricksScript.BricksType = bricksType;
                         bricksScript.ScoreData = bricksType.points;
                         bricksScript.Init(this, bricksType.prefab);
                     }
@@ -115,7 +109,7 @@ public class BricksManager : MonoBehaviour
                 if (bricks[row, col] != null)
                 {
                     brickPool.ReturnToPool(bricks[row, col],
-                        bricks[row, col].GetComponent<BricksScript>().BrickType.prefab);
+                        bricks[row, col].GetComponent<BricksScript>().BricksType.prefab);
 
                     bricks[row, col] = null;
                 }

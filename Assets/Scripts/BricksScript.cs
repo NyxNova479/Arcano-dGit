@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BricksScript : MonoBehaviour
 {
-    public BricksData.BrickType BrickType;
+    public BricksData.BrickType BricksType;
     public int ScoreData;
 
     public SpriteRenderer spriteRenderer;
@@ -21,6 +21,7 @@ public class BricksScript : MonoBehaviour
 
     public BrickState state;
 
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -34,13 +35,14 @@ public class BricksScript : MonoBehaviour
         osr.color = Color.black;
         osr.sortingLayerID = spriteRenderer.sortingLayerID;
         osr.sortingOrder = spriteRenderer.sortingOrder - 1;
+        if(state == BrickState.Hidden) BricksType.isTranslucid = true;   
     }
 
     private void Start()
     {
-        currentHP = BrickType.hitToBreak;
+        currentHP = BricksType.hitToBreak;
 
-        if (BrickType.isTranslucid)
+        if (BricksType.isTranslucid)
             InitTranslucid();
         else
             InitNormal();
@@ -65,9 +67,7 @@ public class BricksScript : MonoBehaviour
     {
         state = BrickState.Hidden;
         spriteRenderer.enabled = true;
-        Color trans = spriteRenderer.color;
-        trans.a = 0f;
-        spriteRenderer.color = new Color(spriteRenderer.color.r,spriteRenderer.color.g,spriteRenderer.color.b,0.1f) ;
+        spriteRenderer.color = new Color(0,spriteRenderer.color.r,spriteRenderer.color.g,spriteRenderer.color.b) ;
     }
 
 
@@ -96,14 +96,14 @@ public class BricksScript : MonoBehaviour
     {
         if (spriteRenderer != null)
         {
-            float ratio = (float)currentHP / BrickType.hitToBreak;
-            spriteRenderer.color = Color.Lerp(Color.black, Color.white, ratio);
+            float ratio = (float)currentHP / BricksType.hitToBreak;
+            spriteRenderer.color = Color.Lerp(Color.red, Color.white, ratio);
         }
     }
-    public IEnumerator RevealBrick()
+    public IEnumerator RevealBrick(BricksScript brick)
     {
         yield return new WaitForSeconds(1f);
-        BrickType.isTranslucid = false;
-        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
+        brick.spriteRenderer.color = new Color(brick.spriteRenderer.color.r, brick.spriteRenderer.color.g, brick.spriteRenderer.color.b, 1);
+        brick.BricksType.isTranslucid = false;
     }
 }

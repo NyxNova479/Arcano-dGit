@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 771386f88cfab344684b80dd9c6a11f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BrickType:
+  BricksType:
     name: 
     points: 0
     hitToBreak: 0

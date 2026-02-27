@@ -98,11 +98,11 @@ public class BallBehaviour : MonoBehaviour
                 {
                     HandlePaddleBounce(hit);
                 }
-                else if (hit.collider.CompareTag("Brick") && hit.collider.GetComponent<BricksScript>().BrickType.isTranslucid)
+                else if (hit.collider.CompareTag("Brick") && hit.collider.GetComponent<BricksScript>().BricksType.isTranslucid)
                 {
                     BricksScript brick = hit.collider.GetComponent<BricksScript>();
                     brick.state = BricksScript.BrickState.Active;
-                    StartCoroutine(brick.RevealBrick());
+                    StartCoroutine(brick.RevealBrick(brick));
 
                 }
                 else if (hit.collider.CompareTag("Brick"))

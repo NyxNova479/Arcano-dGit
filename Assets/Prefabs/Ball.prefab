@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1536739853501568816}
   - component: {fileID: 1225565341524525116}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: Ball
   m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,13 +104,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 0}
+  bounceSound: {fileID: 0}
   ballSpeed: 6
   ballRadius: 0.25
   collisionMask:
     serializedVersion: 2
     m_Bits: 0
   sparkPrefab: {fileID: 0}
+  powerManager: {fileID: 0}
+  revive: {fileID: 0}
   isLaunched: 0
+  energy: 0
 --- !u!50 &8879430301897988425
 Rigidbody2D:
   serializedVersion: 5
@@ -173,7 +177,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.7
 --- !u!96 &1225565341524525116
 TrailRenderer:
   serializedVersion: 3

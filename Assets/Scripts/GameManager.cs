@@ -130,6 +130,12 @@ public class GameManager : MonoBehaviour
         pausePanel.SetActive(IsPaused);
         Time.timeScale = 1f;
     }
+    public void Restart()
+    {
+        IsPaused = false;
+        pausePanel.SetActive(IsPaused);
+        RestartGame();
+    }
 
     public void ReturnToMenu()
     {
