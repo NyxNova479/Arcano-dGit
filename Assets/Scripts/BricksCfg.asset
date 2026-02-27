@@ -21,7 +21,7 @@ MonoBehaviour:
     isTranslucid: 0
   - name: Tank
     points: 25
-    hitToBreak: 3
+    hitToBreak: 4
     color: {r: 0, g: 0, b: 0, a: 0}
     prefab: {fileID: 4014273264997370609, guid: 1a2ab2d7a803cfe4281e658ca27edde6, type: 3}
     isTranslucid: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
     hitToBreak: 2
     color: {r: 0, g: 0, b: 0, a: 0}
     prefab: {fileID: 991975673456800506, guid: 993bdb03f0ba9584981b6142d6dc19f1, type: 3}
-    isTranslucid: 1
+    isTranslucid: 0
   - name: Indestructible
     points: 0
     hitToBreak: 0

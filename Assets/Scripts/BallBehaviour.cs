@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class BallBehaviour : MonoBehaviour
 {
@@ -97,11 +98,17 @@ public class BallBehaviour : MonoBehaviour
                 {
                     HandlePaddleBounce(hit);
                 }
+                else if (hit.collider.CompareTag("Brick") && hit.collider.GetComponent<BricksScript>().BrickType.isTranslucid)
+                {
+                    BricksScript brick = hit.collider.GetComponent<BricksScript>();
+                    brick.state = BricksScript.BrickState.Active;
+                    StartCoroutine(brick.RevealBrick());
+
+                }
                 else if (hit.collider.CompareTag("Brick"))
                 {
                     BricksScript brick = hit.collider.GetComponent<BricksScript>();
-                    if (brick != null)
-                        brick.OnHit();
+                    if (brick != null)  brick.OnHit();
                     direction = Vector2.Reflect(direction, hit.normal).normalized;
                 }
                 else

@@ -12,13 +12,13 @@ public class BricksManager : MonoBehaviour
 
     [SerializeField] BricksData brickData;
 
-    [SerializeField] AudioClip explosionSound;
-    private AudioSource audioSource;
-
     public BrickPool brickPool;
     public int rows = 5; // Nb de rangées
     public int columns = 6; // Nb de colonnes
-    public float spacing = 1f; 
+    public float spacing = 1f;
+
+
+
 
 
 
@@ -34,7 +34,7 @@ public class BricksManager : MonoBehaviour
 
 
     private enum MoveState { MoveRight, MoveLeft }
-    private MoveState currentState = MoveState.MoveRight;
+    private MoveState currentMoveState = MoveState.MoveRight;
 
 
 
@@ -43,7 +43,6 @@ public class BricksManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         playerBoundaryX = player.GetComponent<PlayerBehaviour>().boundary;
         bricks = new GameObject[rows, columns];
 
@@ -104,7 +103,6 @@ public class BricksManager : MonoBehaviour
             }
 
         }
-
         FindFirstObjectByType<SpecialPowerManager>().ChooseRandomPower();
     }
 
@@ -146,7 +144,6 @@ public class BricksManager : MonoBehaviour
 
 
         }
-        audioSource.PlayOneShot(explosionSound, 0.2f);
         GameManager.Instance.AddScore(enemy.GetComponent<BricksScript>().ScoreData);
 
         brickPool.ReturnToPool(enemy, prefab);
@@ -186,4 +183,7 @@ public class BricksManager : MonoBehaviour
 
         return activeBricks;
     }
+
+
+
 }

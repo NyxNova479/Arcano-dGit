@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
         controls.UI.Pause.performed += ctx => Pause();
 
         _livesText.text = _lives.ToString();
+        if(!isGameOver) audioSource.Play();
     }
 
     private void Start()
@@ -192,7 +193,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ShowGameOver()
     {
-        audioSource.PlayOneShot(gameOverSound, 0.5f);
+        audioSource.PlayOneShot(gameOverSound, 0.7f);
         isGameOver = true;
         gameOverPanel.SetActive(true);
         gameOverUI.text = "";
@@ -215,7 +216,7 @@ public class GameManager : MonoBehaviour
 
         ballBehaviour.isLaunched = false;
         ballBehaviour.ballSpeed += Random.Range(-2, 0.5f);
-        audioSource.PlayOneShot(levelUpSound, 0.6f);
+        audioSource.PlayOneShot(levelUpSound, 0.7f);
         bricksManager.SpawnBricks();
         
         _lives = 3;

@@ -9,10 +9,17 @@ public class EnergyExplosion : MonoBehaviour
     [SerializeField] private BallBehaviour ball;
     [SerializeField] private BricksManager bricksManager;
 
+    [SerializeField] AudioClip explosionSound;
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     public void Activate()
     {
         float energy = ball.energy;
-
+        audioSource.PlayOneShot(explosionSound, 0.4f);
         if (energy < smallThreshold)
             DestroyRandomBricks(3);
         else if (energy < mediumThreshold)

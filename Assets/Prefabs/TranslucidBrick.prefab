@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4355662603892038007}
   - component: {fileID: -2729634378754608500}
   m_Layer: 7
-  m_Name: BonusBrick
+  m_Name: TranslucidBrick
   m_TagString: Brick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,8 +109,9 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
     prefab: {fileID: 0}
     isTranslucid: 0
-    hasBonus: 0
   ScoreData: 0
+  spriteRenderer: {fileID: 0}
+  state: 0
 --- !u!61 &4355662603892038007
 BoxCollider2D:
   m_ObjectHideFlags: 0
