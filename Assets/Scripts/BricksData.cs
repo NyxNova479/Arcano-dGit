@@ -14,7 +14,6 @@ public class BricksData : ScriptableObject
         public Color color;
         public GameObject prefab;
         public bool isTranslucid;
-        public bool hasBonus;
     }
 
     public List<BrickType> bricksTypes;

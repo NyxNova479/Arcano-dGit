@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -41,12 +42,19 @@ public class GameManager : MonoBehaviour
     private GameObject gameOverPanel;
     [SerializeField]
     private TextMeshProUGUI gameOverUI;
+    [SerializeField]
+    private GameObject pausePanel;
+
+    [SerializeField] AudioClip levelUpSound;
+    [SerializeField] AudioClip gameOverSound;
+    private AudioSource audioSource;
 
     private bool isGameOver = false;
+    private bool restarted = false;
 
     private void Awake()
     {
-
+        audioSource = GetComponent<AudioSource>();
         if (Instance == null)
         {
             Instance = this; ;
@@ -57,7 +65,7 @@ public class GameManager : MonoBehaviour
         }
 
         controls = new InputSystem_Actions();
-        //controls.UI.Pause.performed += ctx => Pause();
+        controls.UI.Pause.performed += ctx => Pause();
 
         _livesText.text = _lives.ToString();
     }
@@ -90,12 +98,12 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        //controls.UI.Pause.Enable();
+        controls.UI.Pause.Enable();
     }
 
     private void OnDisable()
     {
-        //controls.UI.Pause.Disable();
+        controls.UI.Pause.Disable();
     }
 
     private void Update()
@@ -103,15 +111,29 @@ public class GameManager : MonoBehaviour
         if (isGameOver && Input.anyKeyDown)
         {
             RestartGame();
+            restarted = true;
         }
     }
 
     private void Pause()
     {
         IsPaused = !IsPaused;
+
+        pausePanel.SetActive(IsPaused);
+        Time.timeScale = IsPaused ? 0f : 1f;
     }
 
+    public void ResumeGame()
+    {
+        IsPaused = false;
+        pausePanel.SetActive(IsPaused);
+        Time.timeScale = 1f;
+    }
 
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadSceneAsync(0);
+    }
 
     public void AddScore(int points)
     {
@@ -165,16 +187,12 @@ public class GameManager : MonoBehaviour
             _livesText.text = _lives.ToString();
 
         }
-        //if (_livesImage == null) return;
-        //else if (_lives == 2)
-        //{
-        //    _livesImage[1].SetActive(false);
-        //}
-        //else _livesImage[0].SetActive(false);
+
     }
 
     private IEnumerator ShowGameOver()
     {
+        audioSource.PlayOneShot(gameOverSound, 0.5f);
         isGameOver = true;
         gameOverPanel.SetActive(true);
         gameOverUI.text = "";
@@ -189,14 +207,15 @@ public class GameManager : MonoBehaviour
 
         SaveScore();
 
-        Time.timeScale = 0f;
+        if(!restarted) Time.timeScale = 0f;
     }
 
     public void CompletedLevel()
     {
-        // TODO : Implémenter le CompletedLevel
+
         ballBehaviour.isLaunched = false;
         ballBehaviour.ballSpeed += Random.Range(-2, 0.5f);
+        audioSource.PlayOneShot(levelUpSound, 0.6f);
         bricksManager.SpawnBricks();
         
         _lives = 3;

@@ -16,7 +16,7 @@ public class SpecialPowerManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI powerText;
     private void Update()
     {
-        if (!powerUsed && Input.GetKeyDown(KeyCode.M))
+        if (!powerUsed && Input.GetKeyDown(KeyCode.S))
         {
             ActivatePower();
         }

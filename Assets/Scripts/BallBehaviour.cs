@@ -4,6 +4,8 @@ public class BallBehaviour : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform playerTransform;
+    [SerializeField] AudioClip bounceSound;
+    private AudioSource audioSource;
 
 
 
@@ -16,9 +18,7 @@ public class BallBehaviour : MonoBehaviour
     [SerializeField] private Revive revive;
 
 
-    public bool slowOnDownward = false;
-    [SerializeField] float slowMultiplier = 0.6f;
-    [SerializeField] float slowDuration = 8f;
+
 
     public bool isLaunched = false;
 
@@ -31,7 +31,7 @@ public class BallBehaviour : MonoBehaviour
 
     private void Awake()
     {
-        gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 0.9f, 1f);
+        audioSource = GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -53,18 +53,16 @@ public class BallBehaviour : MonoBehaviour
 
     private void Update()
     {
-        float currentSpeed = ballSpeed;
-
-        if (slowOnDownward && direction.y < 0)
-        {
-            currentSpeed *= slowMultiplier;
-        }
-
-        transform.position += (Vector3)direction * currentSpeed * Time.deltaTime;
-
         if (isLaunched)
         {
+            float currentSpeed = ballSpeed;
+
+            transform.position += (Vector3)direction * currentSpeed * Time.deltaTime;
+
+            
+            
             energy += Time.deltaTime;
+            
         }
     }
 
@@ -87,6 +85,7 @@ public class BallBehaviour : MonoBehaviour
 
             if (hit.collider != null)
             {
+                audioSource.PlayOneShot(bounceSound, 0.2f);
                 Instantiate(sparkPrefab, hit.point, Quaternion.identity);
                 // Avance jusqu’au point de contact (avec skin)
                 float moveDist = Mathf.Max(hit.distance - SKIN, 0f);
