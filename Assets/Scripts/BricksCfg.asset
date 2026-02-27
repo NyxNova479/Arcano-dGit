@@ -30,7 +30,7 @@ MonoBehaviour:
     hitToBreak: 2
     color: {r: 0, g: 0, b: 0, a: 0}
     prefab: {fileID: 991975673456800506, guid: 993bdb03f0ba9584981b6142d6dc19f1, type: 3}
-    isTranslucid: 0
+    isTranslucid: 1
   - name: Indestructible
     points: 0
     hitToBreak: 0

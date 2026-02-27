@@ -4359,7 +4359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6146213393249210220, guid: 67cb5bec5b54c3e4aa63483571601ebe, type: 3}
       propertyPath: MaxSpeed
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6146213393249210220, guid: 67cb5bec5b54c3e4aa63483571601ebe, type: 3}
       propertyPath: wallPrefab
@@ -4371,7 +4371,7 @@ PrefabInstance:
       objectReference: {fileID: 635113267}
     - target: {fileID: 6146213393249210220, guid: 67cb5bec5b54c3e4aa63483571601ebe, type: 3}
       propertyPath: accelFrameDuration
-      value: 10
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 6146213393249210220, guid: 67cb5bec5b54c3e4aa63483571601ebe, type: 3}
       propertyPath: boundaryPercentage
@@ -4379,7 +4379,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6146213393249210220, guid: 67cb5bec5b54c3e4aa63483571601ebe, type: 3}
       propertyPath: decelFrameDuration
-      value: 5
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 6146213393249210220, guid: 67cb5bec5b54c3e4aa63483571601ebe, type: 3}
       propertyPath: decelValue.m_Curve.Array.size
